@@ -1,55 +1,55 @@
-package com.example.mission03;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+package com.example.frame2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+
 public class MainActivity extends AppCompatActivity {
-    ImageView imageView01;
-    ImageView imageView02;
+    ScrollView scrollView;
+    ScrollView scrollView1;
+    ImageView imageView;
+    ImageView imageView1;
+    BitmapDrawable bitmap;
+    int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imageView01 = findViewById(R.id.imageView01);
-        imageView02 = findViewById(R.id.imageView02);
+        scrollView = findViewById(R.id.scrollView);
+        scrollView1 = findViewById(R.id.scrollView1);
+        imageView = findViewById(R.id.imageView);
+        imageView1 = findViewById(R.id.imageView1);
 
-        Button button01 = findViewById(R.id.button01);
-        button01.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                moveImageUp();
-            }
-        });
+        Resources res  = getResources();
+        bitmap = (BitmapDrawable)res.getDrawable(R.drawable.image01);
+        int bitmapWidth = bitmap.getIntrinsicWidth();
+        int bitmapHeight = bitmap.getIntrinsicHeight();
 
-        Button button02 = findViewById(R.id.button02);
-        button02.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                moveImageDown();
-            }
-        });
+        imageView.setImageDrawable(bitmap);
+        imageView.getLayoutParams().width = bitmapWidth;
+        imageView.getLayoutParams().height = bitmapHeight;
 
-        moveImageUp();
+        imageView1.setImageDrawable(bitmap);
+        imageView1.getLayoutParams().width = bitmapWidth;
+        imageView1.getLayoutParams().height = bitmapHeight;
     }
 
-    private void moveImageDown() {
-        imageView01.setImageResource(0);
-        imageView02.setImageResource(R.drawable.image01);
-
-        imageView01.invalidate();
-        imageView02.invalidate();
+    public void upClick(View v){
+        imageView.setVisibility(View.VISIBLE);
+        imageView1.setVisibility(View.INVISIBLE);
     }
 
-    private void moveImageUp() {
-        imageView01.setImageResource(R.drawable.image01);
-        imageView02.setImageResource(0);
+    public void downClick(View v){
+        imageView.setVisibility(View.INVISIBLE);
+        imageView1.setVisibility(View.VISIBLE);
 
-        imageView01.invalidate();
-        imageView02.invalidate();
     }
 
 }
